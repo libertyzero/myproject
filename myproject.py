@@ -406,6 +406,7 @@ class project(osv.osv):
 					res['period_id'] = line_item.period_id.code
 					res['ref_line_id'] = line_item.id
 					ana_acc_7.create(cursor,user,res)
+					
 
 
 			# max_year = self._get_max_year(cursor,user,ids)

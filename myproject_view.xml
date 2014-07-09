@@ -112,7 +112,7 @@
 							</group>
 						</group>
 						<notebook>
-							<!-- <page string="Project Price">
+							<page string="Project Price">
 								<field name="project_price_detail" on_change="project_price_detail_change(project_price_detail)">
 									<form string="Project Price" version="7.0">
 										<group>
@@ -138,7 +138,7 @@
 									</tree>
 								</field>
 						
-							</page> -->
+							</page>
 							<!-- <page string="Budget">
 								<field name="budget_detail" on_change="budget_detail_change(budget_detail)" context="{'test':'test'}">
 									<form string="budget" version="7.0">
