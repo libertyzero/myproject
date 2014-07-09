@@ -13,16 +13,16 @@
 							<field name="analytic_code" />
 							<field name="analytic_name" string="Name"/>
 							<field name="account_line_ids" context="{'test':'aaa'}"/>
+							<field name="ref_analytic_id" />
 						</group>
 					</sheet>
 				</form>
 			</field>
 		</record>
 
-
-    	<record model="ir.ui.view" id="view_myproject_ana_acc_old_tree">
-			<field name="name">myproject.ana.acc.old.tree</field>
-			<field name="model">myproject.analytic_account_old</field>			
+		<record model="ir.ui.view" id="view_myproject_ana_acc_old_tree_many2one">
+			<field name="name">myproject.ana.acc.old.tree.many2one</field>
+			<field name="model">myproject.analytic_account_old</field>
 			<field name="arch" type="xml">
 				<tree string="Project">
 					<field name="analytic_code" />
@@ -31,7 +31,19 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_myproject_acc_line_old_form">
+    	<record model="ir.ui.view" id="view_myproject_ana_acc_old_tree">
+			<field name="name">myproject.ana.acc.old.tree</field>
+			<field name="model">myproject.analytic_account_old</field>			
+			<field name="arch" type="xml">
+				<tree string="Project">
+					<field name="analytic_code" />
+					<field name="analytic_name" />
+					<field name="ref_analytic_id" />
+				</tree>
+			</field>
+		</record>
+
+	<!-- 	<record model="ir.ui.view" id="view_myproject_acc_line_old_form">
 			<field name="name">myproject.acc.line.old.form</field>
 			<field name="model">myproject.account_line_old</field>	
 			<field name="arch" type="xml">
@@ -67,7 +79,7 @@
 				</tree>
 			</field>
 		</record>
-
+ -->
 		<record model="ir.actions.act_window" id="action_myproject_acc_line_old">
 			<field name="name">myproject.acc.line.old</field>
 			<field name="res_model">myproject.account_line_old</field>
@@ -76,7 +88,7 @@
 		
 		</record>
 
-		<record id="action_myproject_acc_line_old_tree" model="ir.actions.act_window.view">
+		<!-- <record id="action_myproject_acc_line_old_tree" model="ir.actions.act_window.view">
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_myproject_acc_line_old_tree" />
             <field name="act_window_id" ref="action_myproject_acc_line_old"/>
@@ -86,7 +98,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_myproject_acc_line_old_form" />
             <field name="act_window_id" ref="action_myproject_acc_line_old"/>
-        </record>
+        </record> -->
 
     	<record model="ir.actions.act_window" id="action_myproject_ana_acc_old">
 			<field name="name">myproject.ana.acc.old</field>

@@ -15,7 +15,7 @@
 						<field name="analytic_id" />
 							<field name="analytic_name" />
 							<field name="type" />
-							
+							<button name="recall_analytic_account" type="object" string="Recall Account"/>
 						</group>
 						
 						

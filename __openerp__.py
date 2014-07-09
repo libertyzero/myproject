@@ -25,7 +25,7 @@
     "version" : "1.1",
     "author" : "OpenERP SA",
     "category" : "Generic Modules/Inventory Control",
-    "depends" : ["base", "jasper_reports"],
+    "depends" : ["base", "jasper_reports", "analytic"],
 
     
     "description": """
@@ -50,15 +50,15 @@
     
     'data': [
         'myproject_view_oldserver.xml',
-        'myproject_view_newserver.xml',
+        # 'myproject_view_newserver.xml',
         'myproject_view.xml',
-        #'myproject_view_project_main.xml',
+        'myproject_view_project_main.xml',
         'myproject_view_project_budget.xml',
         'myproject_view_project_project_price.xml',
     ],
     'css': ['static/src/css/myproject.css'],
-    'test' : ['test/create_old_server_data.yml'],
-
+    # 'test' : ['test/create_old_server_data.yml'],
+    'demo': ['myproject_demo.xml',],
     'installable': True,
     'active': False,
 

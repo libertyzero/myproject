@@ -84,6 +84,7 @@
 			<field name="arch" type="xml">
 				<form string="project" version="7.0">
 					<header>
+						<button name="recall_analytic_account" type="object" string="Recall Account"/>
 					</header>
 					<sheet>
 						<!-- <h1>
@@ -92,13 +93,13 @@
 						<group colspan="4" col="4">
 							<group colspan="2">
 								<field name="project_id"/>
-								<field name="analytic_id" on_change="select_analytic_id(analytic_id)"/>
+								<field name="analytic_id" on_change="select_analytic_id(analytic_id)" context="{ 'tree_view_ref' : 'myproject.view_myproject_ana_acc_old_tree_many2one'}"/>
 								<field name="analytic_name" />
 								<field name="type" />
 								<field name="customer" />
 								<field name="contact" />
-								<field name="sum_project_price" />
-								<field name="sum_budget" />
+								<!-- <field name="sum_project_price" / -->>
+								<!-- <field name="sum_budget" /> -->
 								<field name="start_date" />
 								<field name="state" invisible="1"/>
 							</group>
@@ -111,7 +112,7 @@
 							</group>
 						</group>
 						<notebook>
-							<page string="Project Price">
+							<!-- <page string="Project Price">
 								<field name="project_price_detail" on_change="project_price_detail_change(project_price_detail)">
 									<form string="Project Price" version="7.0">
 										<group>
@@ -136,20 +137,9 @@
 									
 									</tree>
 								</field>
-								<!-- <field name="project_price_ids">
-									<form string="Project Price" version="7.0">
-										<group>
-											<field name="type" />
-											<field name="amount" />
-											<field name="rate" />
-											<field name="currency" />
-										</group>
-									</form>
-
-								</field> -->
-								<!-- <button name="%(myproject.action_myproject_project_price_add_popup)d" string="Add an Item" type="action"/> -->
-							</page>
-							<page string="Budget">
+						
+							</page> -->
+							<!-- <page string="Budget">
 								<field name="budget_detail" on_change="budget_detail_change(budget_detail)" context="{'test':'test'}">
 									<form string="budget" version="7.0">
 										<group>
@@ -172,30 +162,8 @@
 										<field name="amount_bath" sum="Total" />
 									</tree>
 								</field>
-								<!-- <button name="%(myproject.action_myproject_budget_add_popup)d" string="Add an Item" type="action"/> -->
-								<!-- <field name="budget_ids">
-									<form string="Budget" version="7.0">
-										<group>										
-											<field name="description" />
-											<field name="qty" />
-											<field name="unit_price" />
-											<field name="currency" />
-											<field name="rate" />
-											<field name="amount" />
-											<field name="amount_bath" sum="Total" />
-										</group>
-									</form>
-									<tree>
-										<field name="description" />
-										<field name="qty" />
-										<field name="unit_price" />
-										<field name="currency" />
-										<field name="rate" />
-										<field name="amount" />
-										<field name="amount_bath" sum="Total" />
-									</tree>
-								</field> -->
-							</page>
+								
+							</page> -->
 							<page string="Invoicing Plan">
 							</page>
 							<page string="Completion">
@@ -204,8 +172,8 @@
 									<group colspan="4">
 									</group>
 									<group colspan="2" col="2">
-											<field name="year_completion" attrs="{'readonly' : [('state', '!=', 'draft')]}" on_change="select_completion_detail(analytic_id,year_completion)" widget="selection" />
-											
+									<!-- <field name="year_completion" attrs="{'readonly' : [('state', '!=', 'draft')]}" on_change="select_completion_detail(analytic_id,year_completion)" widget="selection" />
+											 -->
 									
 									</group>
 									<group colspan="6" col="1">

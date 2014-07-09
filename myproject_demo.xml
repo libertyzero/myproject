@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+
+        <record model="myproject.analytic_account_old" id="analytic_account_A">
+            <field name="analytic_code">A-000</field>
+            <field name="analytic_name">Analytic Account A</field>
+            <field name="ref_analytic_id">20</field>
+        </record>
+
+        <record model="myproject.account_line_old" id="account_line_01">
+            <field name="account_line_id">1</field>
+            <field name="name">Line A-01</field>
+            <field name="year">2014</field>
+            <field name="period_id">04/2014</field>
+            <field name="amount">-5000</field>
+            <field name="cost">-5000</field>
+            <field name="revenue">0.0</field>
+            <field name="account_id" eval="str(ref('analytic_account_A'))"/>
+            <field name="ref_line_id">11</field>
+            <field name="ref_account_id">20</field>
+        </record>
+
+    </data>
+</openerp>
