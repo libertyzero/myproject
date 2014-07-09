@@ -13,14 +13,12 @@
 					<sheet>
 						<group>
 							<field name="project_id" />
+							<field name="substation" />
+							<field name="type" />
+							<field name="item" />
+							<field name="amount" />
 							<field name="currency" />
 							<field name="rate" />
-							<field name="project_price_line_ids">
-								<tree editable="bottom">
-									<field name="type" />
-									<field name="amount" />
-								</tree>
-							</field>
 						</group>
 					</sheet>
 				</form>
@@ -34,9 +32,12 @@
 			<field name="arch" type="xml">
 				<tree string="project price">					
 					<field name="project_id" />
+					<field name="substation" />
+					<field name="type" />
+					<field name="item" />
+					<field name="amount" />
 					<field name="currency" />
 					<field name="rate" />
-					<field name="total_by_currency" />
 				</tree>
 			</field>
 		</record>

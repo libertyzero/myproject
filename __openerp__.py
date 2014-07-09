@@ -53,7 +53,7 @@
         # 'myproject_view_newserver.xml',
         'myproject_view.xml',
         'myproject_view_project_main.xml',
-        'myproject_view_project_budget.xml',
+        #'myproject_view_project_budget.xml',
         'myproject_view_project_project_price.xml',
     ],
     'css': ['static/src/css/myproject.css'],

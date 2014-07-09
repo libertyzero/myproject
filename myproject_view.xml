@@ -113,30 +113,22 @@
 						</group>
 						<notebook>
 							<page string="Project Price">
-								<field name="project_price_detail" on_change="project_price_detail_change(project_price_detail)">
+								<button name="open_import_project_price" type="object" string="Click" />
+								<field name="project_price_group">
 									<form string="Project Price" version="7.0">
 										<group>
-											<group>
-												<field name="currency" />
-											</group>
-											<group>
-												<field name="rate" />
-											</group>
+											<field name="currency" />
+										<field name="rate" />
+									
 										</group>
-										<!-- <field name="project_price_line_ids" nolabel="1">
-											<tree string="Line" editable="bottom">
-												<field name="type" />
-												<field name="amount" />
-											</tree>
-										</field> -->									
 									</form>
 									<tree>
 										<field name="currency" />
 										<field name="rate" />
-										<!-- <field name="total_by_currency" /> -->
-									
+										<field name="total" />
 									</tree>
 								</field>
+								
 						
 							</page>
 							<!-- <page string="Budget">

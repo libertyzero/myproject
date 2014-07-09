@@ -252,6 +252,13 @@ class project(osv.osv):
 		
 		return res
 
+	def _project_price_group(self, cr, uid, ids, name, arg, context=None):
+		res = {}
+		print '==========project_price_group============'
+		res[ids[0]] = [(0,0,{'currency' :'USD','rate':2.32,'total':2300}),(0,0,{'currency' :'USD','rate':0.52,'total':5500})]
+		
+		return res
+
 	_columns = {
 		'project_id' : fields.integer('ID'),
 		'analytic_id' : fields.many2one('myproject.analytic_account_old', 'Analytic ID'),
@@ -260,7 +267,9 @@ class project(osv.osv):
 		'sum_project_price' : fields.function(_cal_sum_project_price, method=True, type="float", string="Project Price", readonly=True),
 		'sum_budget' : fields.function(_cal_sum_budget, method=True, type="float", string="Budget", readonly=True),
 		'completion_detail' : fields.function(_completion_detail, method=True, type="one2many", relation="myproject.temp_completion", string="Completion"),
-		'project_price_detail' : fields.one2many('myproject.project_price', 'project_id', 'Project Price Ids'),
+		#'project_price_detail' : fields.one2many('myproject.project_price', 'project_id', 'Project Price Ids'),
+		'project_price_group' : fields.function(_project_price_group, method=True, type="one2many", relation="myproject.project_price_group", string="Group Currency"),
+		#'project_price_group' : fields.one2many('myproject.project_price_group','project_id','Group Currency'),
 		'budget_detail' : fields.one2many('myproject.budget', 'project_id', 'Budget Ids'),
 		'year_completion': fields.function(_year_completion, method=True, type="many2one", relation='myproject.project_year', string="Year"),
 		'state': fields.selection([('draft', 'Draft')], 'State', required=True, readonly=True),
@@ -296,6 +305,7 @@ class project(osv.osv):
 
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
 		print '==================fields_view_get======================='
+		print context
 		print view_type
 		context['view_type'] = view_type
 		result = super(project, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu)
@@ -426,7 +436,7 @@ class project(osv.osv):
 		res = super(project, self).default_get(cr, uid, fields, context=context)
 		print fields
 		print res
-
+		res['project_price_group'] = [(0,0,{'currency' :'USD','rate':2.32,'total':2300}),(0,0,{'currency' :'USD','rate':0.52,'total':5500})]
 		# print fields
 		# max_year = self._get_max_year(cr,uid,ids)
 		# res['year_completion'] = (max_year, max_year)
@@ -479,6 +489,22 @@ class project(osv.osv):
 		
 		return res
 		
+	def open_import_project_price(self, cr, uid, ids, context=None):
+		# open import project price page in current
+		print '==============open_import_project_price============='
+		print ids
+		context['project_id'] = ids[0]
+		print context
+		return {
+				'name': ('myproject.project.price.import'),
+				'tag' : 'import',
+				'params' : {'model': 'myproject.project_price'},
+				'type': 'ir.actions.client',
+				'target' : 'new',
+				'context': context,
+
+		}
+		
 project()
 
 class temp_completion(osv.osv):
@@ -494,6 +520,17 @@ class temp_completion(osv.osv):
 
 	}
 temp_completion()
+
+class project_price_group(osv.osv):
+	_name = 'myproject.project_price_group'
+	_columns = {
+		'project_id' : fields.many2one('myproject.project', 'Project ID'),
+		'currency' : fields.many2one('res.currency', 'Currency'),
+		'rate' : fields.float('Rate'),
+		'total' : fields.float('Total'),
+		
+	}
+project_price_group()
 
 class project_price(osv.osv):
 	_name = 'myproject.project_price'
@@ -534,7 +571,7 @@ class project_price(osv.osv):
 		res = super(project_price, self).default_get(cr, uid, fields, context=context)
 		print fields
 		print context
-		print '--------------------'
+		print '--------end default_get------------'
 		return res
 
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
@@ -546,10 +583,18 @@ class project_price(osv.osv):
 		print '=======project_price create================'
 		print context
 		print values
+		if 'p_p_id' not in context:
+			context['p_p_id'] = []
+
 		# geif 'project_id' in context.keys():
 		# 	values['project_id'] = context['project_id']		
-		return super(project_price, self).create(cursor, user, values, context)
-
+		item_id = super(project_price, self).create(cursor, user, values, context)
+		print item_id
+		print type(item_id)
+		context['p_p_id'].append(item_id)
+		print context
+		print '---------end create-------------'
+		return item_id
 
 project_price()
 
