@@ -498,26 +498,31 @@ temp_completion()
 class project_price(osv.osv):
 	_name = 'myproject.project_price'
 
-	def _cal_total_by_currency(self, cr, uid, ids, name, arg, context=None):
-		res = {}
-		for item in self.browse(cr, uid, ids, context):
-			price_line_ids = self.pool.get('myproject.project_price_line').search(cr,uid, [('project_price_id','=',item.id)])
-			sum_price = 0.0
-			for price_id in price_line_ids:
-				price = self.pool.get('myproject.project_price_line').read(cr, uid, price_id, ['amount'])
-				print price
-				sum_price += price['amount']
-			print sum_price
-			res[item.id] = sum_price
-		return res
+	# def _cal_total_by_currency(self, cr, uid, ids, name, arg, context=None):
+	# 	res = {}
+	# 	for item in self.browse(cr, uid, ids, context):
+	# 		price_line_ids = self.pool.get('myproject.project_price_line').search(cr,uid, [('project_price_id','=',item.id)])
+	# 		sum_price = 0.0
+	# 		for price_id in price_line_ids:
+	# 			price = self.pool.get('myproject.project_price_line').read(cr, uid, price_id, ['amount'])
+	# 			print price
+	# 			sum_price += price['amount']
+	# 		print sum_price
+	# 		res[item.id] = sum_price
+	# 	return res
 
 
 	_columns = {
 		'project_id' : fields.many2one('myproject.project', 'Project ID'),
+		'substation' : fields.char('Substation', size=50),
+		'type' : fields.char('Type', size=50),
+		'item' : fields.char('Item', size=50),
+		'amount' : fields.float('Amount'),
 		'currency' : fields.many2one('res.currency', 'Currency'),
 		'rate' : fields.float('Rate'),
-		'project_price_line_ids' : fields.one2many('myproject.project_price_line', 'project_price_id', 'Line IDS'),
-		'total_by_currency' : fields.function(_cal_total_by_currency, method=True, type="float", readonly=True, string="Total"),
+
+		#'project_price_line_ids' : fields.one2many('myproject.project_price_line', 'project_price_id', 'Line IDS'),
+		#'total_by_currency' : fields.function(_cal_total_by_currency, method=True, type="float", readonly=True, string="Total"),
 	}
 
 	def save_project_price_popup(self, cr, uid, ids, context=None):
@@ -536,16 +541,6 @@ class project_price(osv.osv):
 		result = super(project_price, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu)
 		print '===============fields_view_get p_p==========='
 		return result
-
-	def import_data(self,cr, uid, fields, datas, mode='init', current_module='', noupdate=False, context=None, filename=None):
-		print '===========project_price import_data============='
-		print fields
-		print data
-		print mode
-		print current_module
-		print context
-		print file_name
-		return super(project_price, self).import_data(cr,uid,fields,data,mode,current_module,noupdate,context,file_name)
 
 	def create(self, cursor, user, values, context=None):
 		print '=======project_price create================'
