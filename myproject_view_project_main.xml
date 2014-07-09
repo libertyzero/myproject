@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record model="ir.ui.view" id="view_myproject_project_main_form">
+			<field name="name">myproject.project.main.form</field>
+			<field name="model">myproject.project_main</field>
+			<field name="view_type">form</field>	
+			<field name="arch" type="xml">
+				<form string="project" version="7.0">
+					<header>
+					</header>
+					<sheet>
+						<group>
+						<field name="analytic_id" />
+							<field name="analytic_name" />
+							<field name="type" />
+							
+						</group>
+						
+						
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+    	<record model="ir.ui.view" id="view_myproject_project_main_tree">
+			<field name="name">myproject.project.main.tree</field>
+			<field name="model">myproject.project_main</field>	
+			<field name="view_type">tree</field>		
+			<field name="arch" type="xml">
+				<tree string="project">
+					<field name="analytic_id"/>
+					<field name="analytic_name" />
+					<field name="type" />
+				
+				</tree>
+			</field>
+		</record>
+
+    	<record model="ir.actions.act_window" id="action_myproject_project_main">
+			<field name="name">myproject.project.main</field>
+			<field name="res_model">myproject.project_main</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		
+		</record>
+
+		<record id="action_myproject_project_main_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_myproject_project_main_tree" />
+            <field name="act_window_id" ref="action_myproject_project_main"/>
+        </record>
+
+        <record id="action_myproject_project_main_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_myproject_project_main_form" />
+            <field name="act_window_id" ref="action_myproject_project_main"/>
+        </record>
+
+    	<menuitem name="My Project" id="menu_myproject_root" sequence="170" />    
+
+        <menuitem name="Project" id="menu_myproject_main" parent="menu_myproject_root" sequence="1" />
+        <menuitem name="Project Main" id="myproject_project_main" parent="menu_myproject_main" sequence="20" action="action_myproject_project_main" />
+       
+    </data>
+</openerp>

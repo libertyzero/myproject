@@ -1,0 +1,28 @@
+-
+  To test analytic_account_old created
+-
+  I create analytic_account_old with analytic code is A001 and analytic name ProjectAAA
+-
+  !record { model: myproject.analytic_account_old, id: analytic_account_old_id}:
+    'analytic_code' : 'A001'
+    'analytic_name' : 'ProjectAAA'
+-
+  I create account_line_old with description First Under analytic_account_old
+-
+  !record { model: myproject.account_line_old, id: account_line_old_id_0}:
+    'description' : 'First'
+    'analytic_id' : analytic_account_old_id
+-
+  I Create analytic_account_old record using previous data
+-
+  !python { model: myproject.analytic_account_old} : |
+    result = self.create(cr, uid, [ref('analytic_account_old_id')])
+    assert result, 'The Data was not created.'
+-
+  I test analytic_account_old record will have name = ProjectAAA
+-
+  !python { model: myproject.analytic_account_old} : |
+    ids = self.search(cr, uid,[('analytic_name','=','ProjectAAA')])
+    assert len(ids) == 1, 'Assert'
+
+

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record model="ir.ui.view" id="view_myproject_project_budget_add_popup_form">
+			<field name="name">myproject.project.budget.add.popup.form</field>
+			<field name="model">myproject.budget</field>
+			<field name="view_type">form</field>	
+			<field name="arch" type="xml">
+				<form string="Budget" version="7.0">
+					<header>
+					</header>
+					<sheet>
+						<group>
+							<field name="description" />
+							<field name="qty" />
+							<field name="unit_price" />
+							<field name="currency" />
+							<field name="rate" />
+							<field name="amount" />
+							<field name="amount_bath"/>
+							<button name="save_budget_popup" type="object" string="Save"/>
+						</group>						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_myproject_budget_add_popup">
+			<field name="name">myproject.project.budget.add.popup</field>
+			<field name="res_model">myproject.budget</field>
+			<field name="src_model">myproject.budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+            <field name="view_id" ref="view_myproject_project_budget_add_popup_form" />
+            <!-- <field name="context">{'contract_id':active_id}</field> -->
+		</record>
+
+    	<record model="ir.ui.view" id="view_myproject_project_project_price_add_popup_form">
+			<field name="name">myproject.project.project.price.add.popup.form</field>
+			<field name="model">myproject.project_price</field>
+			<field name="view_type">form</field>	
+			<field name="arch" type="xml">
+				<form string="project price" version="7.0">
+					<header>
+					</header>
+					<sheet>
+						<group>
+							<field name="currency" />
+							<field name="rate" />
+							<field name="project_price_line_ids">
+								<tree editable="bottom">
+									<field name="type" />
+									<field name="amount" />
+								</tree>
+							</field>
+							<button name="save_project_price_popup" type="object" string="Save"/>
+						</group>						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_myproject_project_price_add_popup">
+			<field name="name">myproject.project.project.price.add.popup</field>
+			<field name="res_model">myproject.project_price</field>
+			<field name="src_model">myproject.project_price</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+            <field name="view_id" ref="view_myproject_project_project_price_add_popup_form" />
+            <!-- <field name="context">{'contract_id':active_id}</field> -->
+		</record>
+
+    	<record model="ir.ui.view" id="view_myproject_project_form">
+			<field name="name">myproject.project</field>
+			<field name="model">myproject.project</field>
+			<field name="view_type">form</field>
+			<field name="arch" type="xml">
+				<form string="project" version="7.0">
+					<header>
+					</header>
+					<sheet>
+						<!-- <h1>
+                        	<label string="Project " />
+                    	</h1> -->
+						<group colspan="4" col="4">
+							<group colspan="2">
+								<field name="project_id"/>
+								<field name="analytic_id" on_change="select_analytic_id(analytic_id)"/>
+								<field name="analytic_name" />
+								<field name="type" />
+								<field name="customer" />
+								<field name="contact" />
+								<field name="sum_project_price" />
+								<field name="sum_budget" />
+								<field name="start_date" />
+								<field name="state" invisible="1"/>
+							</group>
+							<group colspan="2">
+								<field name="contact_no"/>
+								<field name="contact_date" />
+								<field name="cost_center" />
+								<field name="project_manager" />
+								<field name="end_date" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Project Price">
+								<field name="project_price_detail" on_change="project_price_detail_change(project_price_detail)">
+									<form string="Project Price" version="7.0">
+										<group>
+											<group>
+												<field name="currency" />
+											</group>
+											<group>
+												<field name="rate" />
+											</group>
+										</group>
+										<field name="project_price_line_ids" nolabel="1">
+											<tree string="Line" editable="bottom">
+												<field name="type" />
+												<field name="amount" />
+											</tree>
+										</field>									
+									</form>
+									<tree>
+										<field name="currency" />
+										<field name="rate" />
+										<field name="total_by_currency" />
+									
+									</tree>
+								</field>
+								<!-- <field name="project_price_ids">
+									<form string="Project Price" version="7.0">
+										<group>
+											<field name="type" />
+											<field name="amount" />
+											<field name="rate" />
+											<field name="currency" />
+										</group>
+									</form>
+
+								</field> -->
+								<!-- <button name="%(myproject.action_myproject_project_price_add_popup)d" string="Add an Item" type="action"/> -->
+							</page>
+							<page string="Budget">
+								<field name="budget_detail" on_change="budget_detail_change(budget_detail)" context="{'test':'test'}">
+									<form string="budget" version="7.0">
+										<group>
+											<field name="description"/>
+											<field name="qty" />
+											<field name="unit_price" />
+											<field name="currency" />
+											<field name="rate" />
+											<field name="amount" />
+											<field name="amount_bath"/>
+										</group>
+									</form>
+									<tree string="budget">
+										<field name="description"/>
+										<field name="qty" />
+										<field name="unit_price" />
+										<field name="currency" />
+										<field name="rate" />
+										<field name="amount" />
+										<field name="amount_bath" sum="Total" />
+									</tree>
+								</field>
+								<!-- <button name="%(myproject.action_myproject_budget_add_popup)d" string="Add an Item" type="action"/> -->
+								<!-- <field name="budget_ids">
+									<form string="Budget" version="7.0">
+										<group>										
+											<field name="description" />
+											<field name="qty" />
+											<field name="unit_price" />
+											<field name="currency" />
+											<field name="rate" />
+											<field name="amount" />
+											<field name="amount_bath" sum="Total" />
+										</group>
+									</form>
+									<tree>
+										<field name="description" />
+										<field name="qty" />
+										<field name="unit_price" />
+										<field name="currency" />
+										<field name="rate" />
+										<field name="amount" />
+										<field name="amount_bath" sum="Total" />
+									</tree>
+								</field> -->
+							</page>
+							<page string="Invoicing Plan">
+							</page>
+							<page string="Completion">
+
+								<group colspan="4" col="6">
+									<group colspan="4">
+									</group>
+									<group colspan="2" col="2">
+											<field name="year_completion" attrs="{'readonly' : [('state', '!=', 'draft')]}" on_change="select_completion_detail(analytic_id,year_completion)" widget="selection" />
+											
+									
+									</group>
+									<group colspan="6" col="1">
+										<field name="completion_detail" nolabel="1" >
+											<tree version="7.0" string="Completion" class="myproject_completion_tree" >
+												<field name="period" />
+												<field name="current_cost" />
+												<field name="current_revenue"/>
+												<field name="accu_cost"/>
+												<field name="accu_revenue" />
+												<field name="est_cost" />
+												<field name="est_revenue" />
+											</tree>
+										</field>
+									</group>
+								</group>	
+								
+							</page>
+							<page string="History">
+							</page>
+						</notebook>
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+    	<record model="ir.ui.view" id="view_myproject_project_tree">
+			<field name="name">myproject.project.tree</field>
+			<field name="model">myproject.project</field>	
+			<field name="view_type">tree</field>		
+			<field name="arch" type="xml">
+				<tree string="project">
+					<!-- <field name="analytic_id" /> -->
+					<field name="analytic_name" />
+					<field name="type" />
+					<!-- <field name="sum_project_price" />
+					<field name="sum_budget" /> -->
+				</tree>
+			</field>
+		</record>
+
+    	<record model="ir.actions.act_window" id="action_myproject_project">
+			<field name="name">myproject.project</field>
+			<field name="res_model">myproject.project</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		
+		</record>
+
+		<record id="action_myproject_project_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_myproject_project_tree" />
+            <field name="act_window_id" ref="action_myproject_project"/>
+        </record>
+
+        <record id="action_myproject_project_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_myproject_project_form" />
+            <field name="act_window_id" ref="action_myproject_project"/>
+        </record>
+
+    	<menuitem name="My Project" id="menu_myproject_root" sequence="170" />    
+
+        <menuitem name="Project" id="menu_myproject_main" parent="menu_myproject_root" sequence="1" />
+        <menuitem name="Project" id="myproject_project" parent="menu_myproject_main" sequence="10" action="action_myproject_project" />
+       
+    </data>
+</openerp>

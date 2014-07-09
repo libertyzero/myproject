@@ -1,0 +1,26 @@
+.myproject_completion_tree [data-id="accu_cost"] {
+    background-color: #F5DA81;
+}
+.myproject_completion_tree [data-id="accu_revenue"] {
+    background-color: #F5DA81;
+}
+.myproject_completion_tree [data-id="est_cost"] {
+    background-color: #81BEF7;
+}
+.myproject_completion_tree [data-id="est_revenue"] {
+    background-color: #81BEF7;
+}
+
+
+.myproject_completion_tree [data-field="accu_cost"] {
+    background-color: #F2F5A9;
+}
+.myproject_completion_tree [data-field="accu_revenue"] {
+    background-color: #F2F5A9;
+}
+.myproject_completion_tree [data-field="est_cost"] {
+    background-color: #A9D0F5;
+}
+.myproject_completion_tree [data-field="est_revenue"] {
+    background-color: #A9D0F5;
+}
