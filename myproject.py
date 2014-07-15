@@ -50,7 +50,8 @@ class project(osv.osv):
 	_name = 'myproject.project'
 
 	def get_analytic_line_list(self,cr, uid, ids, analytic_id, select_year):
-		print '--------get_analytic_line_list------------------'
+		print '==============get_analytic_line_list==================='
+		# Return completion line list of select_year and analytic_id
 		print analytic_id, select_year
 		analytic_line_ids = self.pool.get('myproject.account_line_old').search(cr,uid,[('ref_account_id','=',analytic_id),('year','=',select_year)])
 		line_list = []
@@ -183,12 +184,13 @@ class project(osv.osv):
 		# Call method select_completion_detail to query data with analytic_id and select_year
 		# Call When Start Server, After save data, redirect to show data page
 		res = {}
-		# print arg
+		print arg
 		print ids
 		if ids != []:
 			this_analytic_id = self.pool.get('myproject.project').read(cr, uid, ids, ['analytic_id'])
 			print this_analytic_id
-			this_analytic_id = this_analytic_id[0]['analytic_id']
+			this_analytic_id = this_analytic_id[0]['analytic_id'][0]
+			print this_analytic_id
 			if this_analytic_id:
 				ref_analytic_id = self.pool.get('myproject.analytic_account_old').browse(cr,uid,this_analytic_id)
 				ref_analytic_id = ref_analytic_id.ref_analytic_id
@@ -248,13 +250,25 @@ class project(osv.osv):
 		return res
 
 	def _year_completion(self, cr, uid, ids, name, arg, context=None):
+		print '================_year_completion=================='
 		res = {}
+		# print ids
+		# if ids != []:
+		# 	this_analytic_id = self.pool.get('myproject.project').read(cr, uid, ids, ['analytic_id'])
+		# 	print this_analytic_id
+		# 	this_analytic_id = this_analytic_id[0]['analytic_id'][0]
+		# 	print this_analytic_id
+		# 	if this_analytic_id:
+		# 		ref_analytic_id = self.pool.get('myproject.analytic_account_old').browse(cr,uid,this_analytic_id)
+		# 		ref_analytic_id = ref_analytic_id.ref_analytic_id
+		# 		print ref_analytic_id
+		res[ids[0]] = (5,2014)
 		
 		return res
 
 	def _project_price_group(self, cr, uid, ids, name, arg, context=None):
 		res = {}
-		print '==========project_price_group============'
+		print '==========project_price_group in project============'
 		res[ids[0]] = [(0,0,{'currency' :'USD','rate':2.32,'total':2300}),(0,0,{'currency' :'USD','rate':0.52,'total':5500})]
 		
 		return res
@@ -304,7 +318,7 @@ class project(osv.osv):
 
 
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-		print '==================fields_view_get======================='
+		print '==================fields_view_get project======================='
 		print context
 		print view_type
 		context['view_type'] = view_type
@@ -423,8 +437,8 @@ class project(osv.osv):
 			# print max_year
 			max_year = str(datetime.datetime.now().year)
 			vals = {'analytic_name' : account['analytic_name'],
-					'completion_detail' : self.get_analytic_line_list(cursor,user,ids,ref_analytic_id,max_year),
-					#'year_completion' : (max_year,max_year), #from on_change,Call select_completion_detail agian
+					#'completion_detail' : self.get_analytic_line_list(cursor,user,ids,ref_analytic_id,max_year),
+					'year_completion' : (5,2014), #from on_change,Call select_completion_detail agian
 					}
 		else:
 			print 'id= false'
@@ -432,7 +446,7 @@ class project(osv.osv):
 		return { 'value' : vals}
 	
 	def default_get(self, cr, uid, fields, context=None):
-		print '==================default_get============='
+		print '==================default_get project============='
 		res = super(project, self).default_get(cr, uid, fields, context=context)
 		print fields
 		print res
@@ -504,7 +518,12 @@ class project(osv.osv):
 				'context': context,
 
 		}
-		
+
+	def import_data(cr, uid, fields, data, mode='init', current_module='', noupdate=False, context=None, filename=None):
+
+		print '=========== import_data project=============='
+		return super(project, self).import_data(cr, uid, fields, data, mode, current_module, noupdate, context, filename)
+		 
 project()
 
 class temp_completion(osv.osv):
@@ -571,8 +590,13 @@ class project_price(osv.osv):
 		res = super(project_price, self).default_get(cr, uid, fields, context=context)
 		print fields
 		print context
+		
 		print '--------end default_get------------'
 		return res
+
+	def view_init(self, cr, uid, fields, context=None):
+		print '=============view_init p_p`==================='
+		return False
 
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
 		result = super(project_price, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu)
@@ -595,6 +619,11 @@ class project_price(osv.osv):
 		print context
 		print '---------end create-------------'
 		return item_id
+
+	def import_data(cr, uid, fields, data, mode='init', current_module='', noupdate=False, context=None, filename=None):
+
+		print '=========== import_data project_price=============='
+		return super(project, self).import_data(cr, uid, fields, data, mode, current_module, noupdate, context, filename)
 
 project_price()
 

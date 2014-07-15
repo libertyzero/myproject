@@ -2,6 +2,13 @@
 <openerp>
     <data>
 
+    	<record id="event_import_action" model="ir.actions.client">
+			<field name="name">myproject.event_import_action</field>
+			<field name="tag">import</field>
+			<field name="params" eval="{'model': 'myproject.project_price'}"/>
+			<field name="context">{'res_id': active_id}</field>
+		</record>
+
     	<record model="ir.ui.view" id="view_myproject_project_budget_add_popup_form">
 			<field name="name">myproject.project.budget.add.popup.form</field>
 			<field name="model">myproject.budget</field>
@@ -113,7 +120,8 @@
 						</group>
 						<notebook>
 							<page string="Project Price">
-								<button name="open_import_project_price" type="object" string="Click" />
+								<button name="%(myproject.event_import_action)d" type="action" string="Import" context="{'project_id': project_id, 'test': 'aaa'}"/>
+								<!-- <button name="open_import_project_price" type="object" string="Import" context="{'project_id': project_id, 'test': 'aaa'}"/> -->
 								<field name="project_price_group">
 									<form string="Project Price" version="7.0">
 										<group>
@@ -164,8 +172,8 @@
 									<group colspan="4">
 									</group>
 									<group colspan="2" col="2">
-									<!-- <field name="year_completion" attrs="{'readonly' : [('state', '!=', 'draft')]}" on_change="select_completion_detail(analytic_id,year_completion)" widget="selection" />
-											 -->
+									<field name="year_completion" attrs="{'readonly' : [('state', '!=', 'draft')]}" on_change="select_completion_detail(analytic_id,year_completion)" widget="selection" />
+											
 									
 									</group>
 									<group colspan="6" col="1">
